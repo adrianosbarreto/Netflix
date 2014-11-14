@@ -22,7 +22,7 @@ public abstract class Servico {
     public abstract boolean logarServico();
     
     public void mensagemBoasVindas() {
-        System.out.println("Seja Bem Vindo");
+        System.out.print("Seja Bem Vindo");
     }
 
     public double getPreco() {

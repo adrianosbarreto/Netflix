@@ -6,6 +6,9 @@
 package Usuario;
 
 import Usuario.Pessoa;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
@@ -18,13 +21,9 @@ public class Usuario extends Pessoa{
     private String nomeUsuario;
     
     public Usuario() {
+        super();
         this.nomeUsuario = "Sem Nome";
     }
-
-    public Usuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
-    }
-
     
     public Usuario(String nome, String endereco, int idade, String nomeUsuario) {
         super(nome, endereco, idade);
@@ -44,9 +43,9 @@ public class Usuario extends Pessoa{
     
     public void aboutUser(){
         System.out.println("Nome Usuario: " + this.nomeUsuario);
+        System.out.println("Endereço: " + this.endereco);
         System.out.println("Nome: " + this.nome);
         System.out.println("Idade: " + this.idade);
-        System.out.println("Endereço: " + this.endereco);   
     }
     public static Usuario novoUser(){
         Scanner sc = new Scanner(System.in);
@@ -59,10 +58,12 @@ public class Usuario extends Pessoa{
         nome1 = sc.next();
         System.out.println("Digite sua Idade: ");
         idade1 = sc.nextInt();
+        sc.nextLine(); //Limpa o Buffer.
         System.out.println("Digite seu Endereço: ");
-        endereco1 = sc.next();
+        endereco1 = sc.nextLine();
         System.out.println("Digite seu Nome de Usuario: ");
         nomeUser1 = sc.next();
+        
         
         return new Usuario(nome1, endereco1, idade1, nomeUser1);     
     }

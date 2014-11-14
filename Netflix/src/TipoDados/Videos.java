@@ -54,6 +54,7 @@ public class Videos {
         System.out.println( "Nome: " +  this.nome );
         System.out.println( "Duração: " +  this.duracao );
         System.out.println( "Classificação Indicativa: " + this.classificacao );
+        System.out.println("");
     }
 
     public String getNome() {

@@ -60,6 +60,9 @@ public class Pessoa {
         if ( endereco.length() <= 40 ){
             this.endereco = endereco;
         }
+        else {
+            System.out.println("Endereço Invalido!");
+        }
     }
 
     public int getIdade() {

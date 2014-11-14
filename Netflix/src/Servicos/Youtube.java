@@ -8,6 +8,7 @@ package Servicos;
 import TipoDados.Videos;
 import Usuario.Usuario;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -19,21 +20,32 @@ public class Youtube extends Servico implements Streaming{
     private static ArrayList<Videos> listaVideos = new ArrayList<>();
 
     public Youtube(boolean status, Usuario usuario) {
+        super(0);
         this.status = status;
         this.usuario = usuario;
+    }
+    public Youtube(){
+        super(0);
+        usuario = new Usuario();
+        this.status = true;
+    }
+    public static void mostrarListaVideos(){
+        for(Videos sim : listaVideos){
+          sim.aboutVideo();
+        }
     }
     
     public static void adicionarFilme(Videos video){
         listaVideos.add(video);
     }
 
-    public final int pesquisarVideos(Videos video){
+    public final int pesquisarVideos(String nome){
         for( int i = 0; i < listaVideos.size(); i++ ){
-            if( listaVideos.get(i).equals(video) ){
+            if( listaVideos.get(i).getNome().equals(nome) ){
                 return i;
             }
         }
-        return 0;
+        return -1;
     }
 
     @Override
@@ -53,7 +65,7 @@ public class Youtube extends Servico implements Streaming{
     @Override
     public void mensagemBoasVindas() {
         super.mensagemBoasVindas();
-        System.out.print("ao YouTube!");
+        System.out.println(" ao YouTube!");
     }
 
     @Override 
@@ -77,4 +89,30 @@ public class Youtube extends Servico implements Streaming{
             System.out.println("Status: off");
         }
     }
+    
+    public final int menuYoutube(){
+        Scanner sc = new Scanner(System.in);
+        int opcao;
+        System.out.println("1 - Mostrar Lista Videos");
+        System.out.println("2 - Procurar Video");
+        System.out.print("Digite numero da opcao Desejada: ");
+        opcao = sc.nextInt();
+        
+        return opcao;
+    }
+
+    public static ArrayList<Videos> getListaVideos() {
+        return listaVideos;
+    }
+    
+    
+    public final int submenu(){
+        Scanner sc = new Scanner(System.in);
+        int opcao;
+        System.out.println("1 - Reproduzir Filme");
+        opcao = sc.nextInt();
+        
+        return opcao;
+    }
+    
 }

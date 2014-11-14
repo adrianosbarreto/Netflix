@@ -8,12 +8,16 @@ package Servicos;
 import TipoDados.Videos;
 import Usuario.Usuario;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
  * @author Adriano
  */
-public class Netflix {
+public class Netflix extends Servico implements Streaming {
+
+    
+
     
     public enum FormaPagamento{
         CREDITO,
@@ -31,6 +35,7 @@ public class Netflix {
     private boolean status;
 
     public Netflix(Usuario cliente, FormaPagamento forma, boolean status) {
+        super(19.90);
         this.cliente = cliente;
         this.status = status;
         this.setNumeroAtualAparelhos();
@@ -39,13 +44,14 @@ public class Netflix {
     }
 
     public Netflix() {
+        super(19.90);
         this.cliente = new Usuario();
         this.formaPagamento = FormaPagamento.BOLETO;
+        this.setNumeroAtualAparelhos();
         this.status = false;
         
     }
     
-
     public static int getNumeroAtualAparelhos() {
         return numeroAtualAparelhos;
     }
@@ -100,14 +106,20 @@ public class Netflix {
           sim.aboutVideo();
         }
     }
+
+    public static ArrayList<Videos> getFilmesDisponiveis() {
+        return filmesDisponiveis;
+    }
+    
+    
     public void mostrarFilmesAssistidos(){
         for(Videos sim : this.filmesAssistidos ){
             sim.aboutVideo();
         }
     }
-    public final int procurarFilme(Videos video){
+    public final int procurarFilme(String nomeFilme){
         for( int i = 0; i < filmesDisponiveis.size(); i++ ){
-            if (filmesDisponiveis.get(i).getNome().equals(video.getNome())){
+            if (filmesDisponiveis.get(i).getNome().equals(nomeFilme)){
                 return i;
             }
         }
@@ -123,12 +135,60 @@ public class Netflix {
             return false;  
         }
     }
-    /*
-    public void menuNetflix(){
-        sout("");
+    
+    @Override
+    public boolean logarServico() {
+        if( status == false ){
+            status = true;
+            cliente.aboutUser();
+        }
+        else{
+            System.out.println("Usuario já está Logado!");
+            cliente.aboutUser();
+        }
         
+        return true;
+    }
+    
+    @Override
+    public void mensagemBoasVindas() {
+        super.mensagemBoasVindas();
+        System.out.println(" à Netflix");
     }
 
-*/  
-    
+    @Override 
+    public boolean reproduzirMidia( Videos video ) {            
+        if (video.getClassificacao() <= cliente.getIdade()){
+            System.out.println("Carregando Video...");
+            System.out.println("Video " + video.getNome() + " em reprodução");
+            this.filmesAssistidos.add(video);
+            return true;
+        }
+        else{
+            System.out.println("Fora da classificação Indicativa");
+            return false;
+        }        
+    }
+    public final int menuNetflix(){
+        Scanner sc = new Scanner(System.in);
+        int opcao;
+        System.out.println("1 - Mostrar Filmes Disponiveis");
+        System.out.println("2 - Mostrar Filmes Assistidos");
+        System.out.println("3 - Procurar Filme");
+        System.out.println("4 - Conectar Aparelho");
+        
+        System.out.print("Digite numero da opcao Desejada: ");
+        opcao = sc.nextInt();
+        
+        return opcao;
+    }
+    public final int subMenu(){
+        Scanner sc = new Scanner(System.in);
+        int opcao;
+        System.out.println("1 - Adicionar à Minha Lista");
+        System.out.println("2 - Reproduzir Filme");
+        opcao = sc.nextInt();
+        
+        return opcao;
+    }
 }
